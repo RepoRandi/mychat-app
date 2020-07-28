@@ -8,6 +8,7 @@ import {
   Gap,
 } from '../../components';
 import {fonts, colors} from '../../utils';
+import {JsonDoctorCategory} from '../../assets';
 
 const Home = () => {
   return (
@@ -23,10 +24,11 @@ const Home = () => {
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               <View style={styles.category}>
                 <Gap width={32} />
-                <DoctorCategory />
-                <DoctorCategory />
-                <DoctorCategory />
-                <DoctorCategory />
+                {JsonDoctorCategory.data.map((item) => {
+                  return (
+                    <DoctorCategory key={item.id} category={item.category} />
+                  );
+                })}
                 <Gap width={22} />
               </View>
             </ScrollView>
