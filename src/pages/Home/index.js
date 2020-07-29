@@ -10,7 +10,7 @@ import {
 import {fonts, colors} from '../../utils';
 import {JsonDoctorCategory} from '../../assets';
 
-const Home = () => {
+const Home = ({navigation}) => {
   return (
     <View style={styles.page}>
       <View style={styles.content}>
@@ -26,7 +26,11 @@ const Home = () => {
                 <Gap width={32} />
                 {JsonDoctorCategory.data.map((item) => {
                   return (
-                    <DoctorCategory key={item.id} category={item.category} />
+                    <DoctorCategory
+                      key={item.id}
+                      category={item.category}
+                      onPress={() => navigation.navigate('ChooseDoctor')}
+                    />
                   );
                 })}
                 <Gap width={22} />
@@ -34,10 +38,10 @@ const Home = () => {
             </ScrollView>
           </View>
           <View style={styles.wrapperSection}>
-            <Text style={styles.sectionLabel}>Top Rated</Text>
+            {/* <Text style={styles.sectionLabel}>Top Rated</Text>
             <DoctorRated />
             <DoctorRated />
-            <DoctorRated />
+            <DoctorRated /> */}
             <Text style={styles.sectionLabel}>Good News</Text>
           </View>
           <NewsItem />

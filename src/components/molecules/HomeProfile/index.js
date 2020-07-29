@@ -7,7 +7,7 @@ const HomeProfile = () => {
     <View style={styles.container}>
       <Image source={DummyUser} style={styles.avatar} />
       <View>
-        <Text style={styles.name}>Fera Resika</Text>
+        <Text style={styles.name}>Randi Maulana</Text>
         <Text style={styles.profession}>Full Stack Developer</Text>
       </View>
     </View>
@@ -17,8 +17,8 @@ const HomeProfile = () => {
 export default HomeProfile;
 
 const styles = StyleSheet.create({
-  container: {flexDirection: 'row'},
-  avatar: {width: 46, height: 46, borderRadius: 46 / 2, marginRight: 12},
+  container: {flexDirection: 'row', alignItems: 'center'},
+  avatar: {width: 50, height: 50, borderRadius: 50 / 2, marginRight: 12},
   name: {
     fontSize: 16,
     fontFamily: fonts.primary[600],

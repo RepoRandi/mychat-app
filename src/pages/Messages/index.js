@@ -10,19 +10,19 @@ const Messages = () => {
       id: 1,
       profile: DummyUser1,
       name: 'Milea Anita',
-      msg: 'Sayang terimakasih hadiahnya, Aku suka bang...',
+      desc: 'Sayang terimakasih hadiahnya, Aku suka bang...',
     },
     {
       id: 2,
       profile: DummyUser2,
       name: 'Gisel',
-      msg: 'Besok malam minggu, Jangan lupa Ke rum... ',
+      desc: 'Besok malam minggu, Jangan lupa Ke rum... ',
     },
     {
       id: 3,
       profile: DummyUser3,
       name: 'Putri Terbang',
-      msg: 'Kenapa akhir2 ini kamu susah di hubungi ter...',
+      desc: 'Kenapa akhir2 ini kamu susah di hubungi ter...',
     },
   ]);
   return (
@@ -35,7 +35,7 @@ const Messages = () => {
               key={user.id}
               profile={user.profile}
               name={user.name}
-              msg={user.msg}
+              desc={user.desc}
             />
           );
         })}
