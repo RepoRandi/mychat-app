@@ -4,11 +4,13 @@ import HomeProfile from './HomeProfile';
 import DoctorCategory from './DoctorCategory';
 import DoctorRated from './DoctorRated';
 import NewsItem from './NewsItem';
-import ListDoctor from './ListDoctor';
+import List from './List';
 import ListHospital from './ListHospital';
 import ChatItem from './ChatItem';
 import InputChat from './InputChat';
 import DarkProfile from './DarkProfile';
+import Profile from './Profile';
+import ProfileItem from './ProfileItem';
 
 export {
   Header,
@@ -17,9 +19,11 @@ export {
   DoctorCategory,
   DoctorRated,
   NewsItem,
-  ListDoctor,
+  List,
   ListHospital,
   ChatItem,
   InputChat,
   DarkProfile,
+  Profile,
+  ProfileItem,
 };

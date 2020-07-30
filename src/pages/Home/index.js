@@ -8,7 +8,12 @@ import {
   Gap,
 } from '../../components';
 import {fonts, colors} from '../../utils';
-import {JsonDoctorCategory} from '../../assets';
+import {
+  JsonDoctorCategory,
+  DummyUser1,
+  DummyUser2,
+  DummyUser3,
+} from '../../assets';
 
 const Home = ({navigation}) => {
   return (
@@ -17,7 +22,7 @@ const Home = ({navigation}) => {
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.wrapperSection}>
             <Gap height={30} />
-            <HomeProfile />
+            <HomeProfile onPress={() => navigation.navigate('UserProfile')} />
             <Text style={styles.welcome}>Mau Chating Dengan Siapa?</Text>
           </View>
           <View style={styles.wrapperScroll}>
@@ -38,10 +43,25 @@ const Home = ({navigation}) => {
             </ScrollView>
           </View>
           <View style={styles.wrapperSection}>
-            {/* <Text style={styles.sectionLabel}>Top Rated</Text>
-            <DoctorRated />
-            <DoctorRated />
-            <DoctorRated /> */}
+            <Text style={styles.sectionLabel}>Top Rated</Text>
+            <DoctorRated
+              name="Milea Anita"
+              desc="Pediatrician"
+              avatar={DummyUser1}
+              onPress={() => navigation.navigate('DoctorProfile')}
+            />
+            <DoctorRated
+              name="Gisel"
+              desc="Pediatrician"
+              avatar={DummyUser2}
+              onPress={() => navigation.navigate('DoctorProfile')}
+            />
+            <DoctorRated
+              name="Putri"
+              desc="Pediatrician"
+              avatar={DummyUser3}
+              onPress={() => navigation.navigate('DoctorProfile')}
+            />
             <Text style={styles.sectionLabel}>Good News</Text>
           </View>
           <NewsItem />

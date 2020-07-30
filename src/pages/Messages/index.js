@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {ListDoctor} from '../../components';
+import {List} from '../../components';
 import {colors, fonts} from '../../utils';
 import {DummyUser1, DummyUser2, DummyUser3} from '../../assets';
 
-const Messages = () => {
+const Messages = ({navigation}) => {
   const [users, setUsers] = useState([
     {
       id: 1,
@@ -21,7 +21,7 @@ const Messages = () => {
     {
       id: 3,
       profile: DummyUser3,
-      name: 'Putri Terbang',
+      name: 'Putri',
       desc: 'Kenapa akhir2 ini kamu susah di hubungi ter...',
     },
   ]);
@@ -31,11 +31,12 @@ const Messages = () => {
         <Text style={styles.title}>Messages</Text>
         {users.map((user) => {
           return (
-            <ListDoctor
+            <List
               key={user.id}
               profile={user.profile}
               name={user.name}
               desc={user.desc}
+              onPress={() => navigation.navigate('Chatting')}
             />
           );
         })}
@@ -58,7 +59,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: fonts.primary[600],
     color: colors.text.primary,
-    marginTop: 30,
+    marginTop: 20,
     marginLeft: 16,
   },
 });

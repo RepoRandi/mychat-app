@@ -1,23 +1,46 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, Text, View, ImageBackground} from 'react-native';
 import {
   ILHospitalBg,
   DummyHospital1,
   DummyHospital2,
   DummyHospital3,
+  DummyUser1,
+  DummyUser2,
+  DummyUser3,
 } from '../../assets';
 import {fonts, colors} from '../../utils';
-import {ListHospital} from '../../components';
+import {ListHospital, List} from '../../components';
 
 const Contact = () => {
+  const [users, setUsers] = useState([
+    {
+      id: 1,
+      profile: DummyUser1,
+      name: 'Milea Anita',
+      desc: '@milea',
+    },
+    {
+      id: 2,
+      profile: DummyUser2,
+      name: 'Gisel',
+      desc: '@gisel',
+    },
+    {
+      id: 3,
+      profile: DummyUser3,
+      name: 'Putri',
+      desc: '@putri',
+    },
+  ]);
   return (
     <View style={styles.page}>
       <ImageBackground source={ILHospitalBg} style={styles.background}>
-        <Text style={styles.title}>Nearby Hospital</Text>
+        <Text style={styles.title}>Contact</Text>
         <Text style={styles.desc}>3 tersedia</Text>
       </ImageBackground>
       <View style={styles.content}>
-        <ListHospital
+        {/* <ListHospital
           type="Rumah Sakit"
           name="Citra Bunga Merdeka"
           address="Jln. Surya Sejahtera 20"
@@ -34,7 +57,21 @@ const Contact = () => {
           name="Tingkat Paling Atas"
           address="Jln. Surya Sejahtera 36"
           pic={DummyHospital3}
-        />
+        /> */}
+        <View>
+          <View>
+            {users.map((user) => {
+              return (
+                <List
+                  key={user.id}
+                  profile={user.profile}
+                  name={user.name}
+                  desc={user.desc}
+                />
+              );
+            })}
+          </View>
+        </View>
       </View>
     </View>
   );

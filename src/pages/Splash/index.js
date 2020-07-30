@@ -8,7 +8,7 @@ const Splash = ({navigation}) => {
     setTimeout(() => {
       navigation.replace('GetStarted');
     }, 3000);
-  }, []);
+  }, [navigation]);
   return (
     <View style={styles.page}>
       <ILLogo width={150} height={150} />
