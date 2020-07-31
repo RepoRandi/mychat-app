@@ -11,6 +11,7 @@ import InputChat from './InputChat';
 import DarkProfile from './DarkProfile';
 import Profile from './Profile';
 import ProfileItem from './ProfileItem';
+import Loading from './Loading';
 
 export {
   Header,
@@ -26,4 +27,5 @@ export {
   DarkProfile,
   Profile,
   ProfileItem,
+  Loading,
 };
