@@ -1,15 +1,22 @@
 import React from 'react';
-import {StyleSheet, Text, View, Image} from 'react-native';
-import {DummyUser, IconRemovePhoto} from '../../../assets';
+import {Image, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {IconRemovePhoto} from '../../../assets';
 import {colors, fonts} from '../../../utils';
 
-const Profile = ({name, desc, isRemove}) => {
+const Profile = ({name, desc, isRemove, photo, onPress}) => {
   return (
     <View style={styles.container}>
-      <View style={styles.borderProfile}>
-        <Image source={DummyUser} style={styles.avatar} />
-        {isRemove && <IconRemovePhoto style={styles.removePhoto} />}
-      </View>
+      {!isRemove && (
+        <View style={styles.borderProfile}>
+          <Image source={photo} style={styles.avatar} />
+        </View>
+      )}
+      {isRemove && (
+        <TouchableOpacity style={styles.borderProfile} onPress={onPress}>
+          <Image source={photo} style={styles.avatar} />
+          {isRemove && <IconRemovePhoto style={styles.removePhoto} />}
+        </TouchableOpacity>
+      )}
       {name && (
         <View>
           <Text style={styles.name}>{name}</Text>
@@ -44,6 +51,7 @@ const styles = StyleSheet.create({
     color: colors.text.primary,
     marginTop: 16,
     textAlign: 'center',
+    textTransform: 'capitalize',
   },
   profession: {
     fontSize: 16,
@@ -51,5 +59,6 @@ const styles = StyleSheet.create({
     color: colors.text.secondary,
     marginTop: 2,
     textAlign: 'center',
+    textTransform: 'capitalize',
   },
 });
