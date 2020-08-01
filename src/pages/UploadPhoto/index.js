@@ -1,24 +1,47 @@
-import React from 'react';
-import {StyleSheet, Text, View, Image} from 'react-native';
+import React, {useState} from 'react';
+import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import {Header, Button, Link, Gap} from '../../components';
-import {ILNullPhoto, IconAddPhoto} from '../../assets';
+import {ILNullPhoto, IconAddPhoto, IconRemovePhoto} from '../../assets';
 import {colors, fonts} from '../../utils';
+import ImagePicker from 'react-native-image-picker';
+import {showMessage, hideMessage} from 'react-native-flash-message';
 
 const UploadPhoto = ({navigation}) => {
+  const [hasPhoto, setHasPhoto] = useState(false);
+  const [photo, setPhoto] = useState(ILNullPhoto);
+  const getImage = () => {
+    ImagePicker.launchImageLibrary({}, (response) => {
+      console.log('response: ', response);
+      if (response.didCancel || response.error) {
+        showMessage({
+          message: 'Oops, sepertinya anda tidak memilih foto nya?',
+          type: 'default',
+          backgroundColor: colors.error,
+          color: colors.white,
+        });
+      } else {
+        const source = {uri: response.uri};
+        setPhoto(source);
+        setHasPhoto(true);
+      }
+    });
+  };
   return (
     <View style={styles.page}>
       <Header title="Upload Photo" onPress={() => navigation.goBack()} />
       <View style={styles.content}>
         <View style={styles.profile}>
-          <View style={styles.wrapperAvatar}>
-            <Image source={ILNullPhoto} style={styles.avatar} />
-            <IconAddPhoto style={styles.addPhoto} />
-          </View>
+          <TouchableOpacity style={styles.wrapperAvatar} onPress={getImage}>
+            <Image source={photo} style={styles.avatar} />
+            {hasPhoto && <IconRemovePhoto style={styles.addPhoto} />}
+            {!hasPhoto && <IconAddPhoto style={styles.addPhoto} />}
+          </TouchableOpacity>
           <Text style={styles.name}>Randi Maulana</Text>
           <Text style={styles.profession}>Full Stack Developer</Text>
         </View>
         <View>
           <Button
+            disable={!hasPhoto}
             title="Upload And Continue"
             onPress={() => navigation.replace('MainApp')}
           />
@@ -59,7 +82,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  avatar: {width: 110, height: 110},
+  avatar: {width: 110, height: 110, borderRadius: 110 / 2},
   addPhoto: {position: 'absolute', bottom: 8, right: 6},
   name: {
     fontSize: 24,
