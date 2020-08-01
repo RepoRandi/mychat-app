@@ -1,30 +1,49 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
-import {Header, Button, Link, Gap} from '../../components';
-import {ILNullPhoto, IconAddPhoto, IconRemovePhoto} from '../../assets';
-import {colors, fonts} from '../../utils';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {showMessage} from 'react-native-flash-message';
 import ImagePicker from 'react-native-image-picker';
-import {showMessage, hideMessage} from 'react-native-flash-message';
+import {IconAddPhoto, IconRemovePhoto, ILNullPhoto} from '../../assets';
+import {Button, Gap, Header, Link} from '../../components';
+import {colors, fonts, storeData} from '../../utils';
+import {Fire} from '../../configs';
 
-const UploadPhoto = ({navigation}) => {
+const UploadPhoto = ({navigation, route}) => {
+  const {fullName, profession, uid} = route.params;
+  const [photoForDB, setPhotoForDB] = useState('');
   const [hasPhoto, setHasPhoto] = useState(false);
   const [photo, setPhoto] = useState(ILNullPhoto);
   const getImage = () => {
-    ImagePicker.launchImageLibrary({}, (response) => {
-      console.log('response: ', response);
-      if (response.didCancel || response.error) {
-        showMessage({
-          message: 'Oops, sepertinya anda tidak memilih foto nya?',
-          type: 'default',
-          backgroundColor: colors.error,
-          color: colors.white,
-        });
-      } else {
-        const source = {uri: response.uri};
-        setPhoto(source);
-        setHasPhoto(true);
-      }
-    });
+    ImagePicker.launchImageLibrary(
+      {quality: 0.5, maxWidth: 200, maxHeight: 200},
+      (response) => {
+        console.log('response: ', response);
+        if (response.didCancel || response.error) {
+          showMessage({
+            message: 'Oops, sepertinya anda tidak memilih foto nya?',
+            type: 'default',
+            backgroundColor: colors.error,
+            color: colors.white,
+          });
+        } else {
+          console.log('response getImage: ', response);
+          const source = {uri: response.uri};
+          setPhotoForDB(`data: ${response.type};base64, ${response.data}`);
+          setPhoto(source);
+          setHasPhoto(true);
+        }
+      },
+    );
+  };
+
+  const uploadAndContinue = () => {
+    Fire.database()
+      .ref('users/' + uid + '/')
+      .update({photo: photoForDB});
+
+    const data = route.params;
+    data.photo = photoForDB;
+    storeData('user', data);
+    navigation.replace('MainApp');
   };
   return (
     <View style={styles.page}>
@@ -36,14 +55,14 @@ const UploadPhoto = ({navigation}) => {
             {hasPhoto && <IconRemovePhoto style={styles.addPhoto} />}
             {!hasPhoto && <IconAddPhoto style={styles.addPhoto} />}
           </TouchableOpacity>
-          <Text style={styles.name}>Randi Maulana</Text>
-          <Text style={styles.profession}>Full Stack Developer</Text>
+          <Text style={styles.name}>{fullName}</Text>
+          <Text style={styles.profession}>{profession}</Text>
         </View>
         <View>
           <Button
             disable={!hasPhoto}
             title="Upload And Continue"
-            onPress={() => navigation.replace('MainApp')}
+            onPress={uploadAndContinue}
           />
           <Gap height={30} />
           <Link

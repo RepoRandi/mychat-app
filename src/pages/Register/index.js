@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
+import {showMessage} from 'react-native-flash-message';
 import {Button, Gap, Header, Input, Loading} from '../../components';
-import {colors, useForm, storeData, getData} from '../../utils';
 import {Fire} from '../../configs';
-import {showMessage, hideMessage} from 'react-native-flash-message';
+import {colors, storeData, useForm} from '../../utils';
 
 const Register = ({navigation}) => {
   const [form, setForm] = useForm({
@@ -17,10 +17,6 @@ const Register = ({navigation}) => {
 
   const onContinue = () => {
     console.log(form);
-    // getData('user').then((res) => {
-    //   console.log('data: ', res);
-    // });
-    // storeData('user', form);
     setLoading(true);
     Fire.auth()
       .createUserWithEmailAndPassword(form.email, form.password)
@@ -32,6 +28,7 @@ const Register = ({navigation}) => {
           fullName: form.fullName,
           profession: form.profession,
           email: form.email,
+          uid: success.user.uid,
         };
 
         Fire.database()
@@ -39,7 +36,7 @@ const Register = ({navigation}) => {
           .set(data);
 
         storeData('user', data);
-        navigation.navigate('UploadPhoto');
+        navigation.navigate('UploadPhoto', data);
         console.log('Register Success', success);
       })
       .catch((error) => {
@@ -53,7 +50,6 @@ const Register = ({navigation}) => {
         });
         console.log('error:', error);
       });
-    // () => navigation.navigate('UploadPhoto')
   };
 
   return (
