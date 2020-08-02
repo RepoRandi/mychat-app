@@ -1,17 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
-import {showMessage} from 'react-native-flash-message';
 import ImagePicker from 'react-native-image-picker';
 import {ILNullPhoto} from '../../assets';
 import {Button, Gap, Header, Input, Profile} from '../../components';
 import {Fire} from '../../configs';
-import {colors, getData, storeData} from '../../utils';
+import {colors, getData, showError, storeData} from '../../utils';
 
 const UpdateProfile = ({navigation}) => {
   const [profile, setProfile] = useState({
     fullName: '',
     profession: '',
   });
+
   const [password, setPassword] = useState('');
   const [photo, setPhoto] = useState(ILNullPhoto);
   const [photoForDB, setPhotoForDB] = useState('');
@@ -25,17 +25,9 @@ const UpdateProfile = ({navigation}) => {
   }, []);
 
   const update = () => {
-    console.log('Profile: ', profile);
-    console.log('New Password: ', password);
-
     if (password.length > 0) {
       if (password.length < 6) {
-        showMessage({
-          message: 'Password kurang dari 6 karakter',
-          type: 'default',
-          backgroundColor: colors.error,
-          color: colors.white,
-        });
+        showError('Password kurang dari 6 karakter');
       } else {
         //? Update Password
         updatePassword();
@@ -52,12 +44,7 @@ const UpdateProfile = ({navigation}) => {
     Fire.auth().onAuthStateChanged((user) => {
       if (user) {
         user.updatePassword(password).catch((err) => {
-          showMessage({
-            message: err.message,
-            type: 'default',
-            backgroundColor: colors.error,
-            color: colors.white,
-          });
+          showError(err.message);
         });
       }
     });
@@ -70,17 +57,10 @@ const UpdateProfile = ({navigation}) => {
       .ref(`users/${profile.uid}/`)
       .update(data)
       .then(() => {
-        console.log('success: ', data);
         storeData('user', data);
       })
       .catch((err) => {
-        console.log('Error: ', err);
-        showMessage({
-          message: err.message,
-          type: 'default',
-          backgroundColor: colors.error,
-          color: colors.white,
-        });
+        showError(err.message);
       });
   };
 
@@ -95,16 +75,9 @@ const UpdateProfile = ({navigation}) => {
     ImagePicker.launchImageLibrary(
       {quality: 0.5, maxWidth: 200, maxHeight: 200},
       (response) => {
-        console.log('response: ', response);
         if (response.didCancel || response.error) {
-          showMessage({
-            message: 'Oops, sepertinya anda tidak memilih foto nya?',
-            type: 'default',
-            backgroundColor: colors.error,
-            color: colors.white,
-          });
+          showError('Oops, sepertinya anda tidak memilih foto nya?');
         } else {
-          console.log('response getImage: ', response);
           const source = {uri: response.uri};
           setPhotoForDB(`data: ${response.type};base64, ${response.data}`);
           setPhoto(source);

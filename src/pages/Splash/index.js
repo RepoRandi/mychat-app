@@ -1,28 +1,34 @@
 import React, {useEffect} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, ActivityIndicator} from 'react-native';
 import {ILLogo} from '../../assets';
 import {colors, fonts} from '../../utils';
 import {Fire} from '../../configs';
 
 const Splash = ({navigation}) => {
   useEffect(() => {
-    setTimeout(() => {
-      Fire.auth().onAuthStateChanged((user) => {
+    const unSubscribe = Fire.auth().onAuthStateChanged((user) => {
+      setTimeout(() => {
         if (user) {
           //? User lagi login
-          console.log('User: ', user);
           navigation.replace('MainApp');
         } else {
           //! User Logout
           navigation.replace('GetStarted');
         }
-      });
-    }, 3000);
+      }, 3000);
+    });
+
+    return () => unSubscribe();
   }, [navigation]);
+
   return (
     <View style={styles.page}>
       <ILLogo width={150} height={150} />
       <Text style={styles.title}>My Chat</Text>
+      <View style={styles.wrapper}>
+        <ActivityIndicator size="large" color={colors.primary} />
+        <Text style={styles.text}>Loading...</Text>
+      </View>
     </View>
   );
 };
@@ -41,5 +47,20 @@ const styles = StyleSheet.create({
     fontFamily: fonts.primary[600],
     color: colors.text.primary,
     marginTop: 20,
+  },
+  wrapper: {
+    flex: 1,
+    position: 'absolute',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    width: '100%',
+    height: '100%',
+    paddingBottom: 20,
+  },
+  text: {
+    fontSize: 18,
+    color: colors.primary,
+    fontFamily: fonts.primary[600],
+    marginTop: 16,
   },
 });
