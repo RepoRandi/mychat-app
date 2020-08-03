@@ -27,7 +27,9 @@ const Home = ({navigation}) => {
       .once('value')
       .then((res) => {
         if (res.val()) {
-          setCategoryDoctor(res.val());
+          const data = res.val();
+          const filterData = data.filter((el) => el !== null);
+          setCategoryDoctor(filterData);
         }
       })
       .catch((err) => {
@@ -42,7 +44,6 @@ const Home = ({navigation}) => {
       .limitToLast(5)
       .once('value')
       .then((res) => {
-        console.log('Top Rated doctor: ', res.val());
         if (res.val()) {
           const oldData = res.val();
           const data = [];
@@ -52,7 +53,6 @@ const Home = ({navigation}) => {
               data: oldData[key],
             });
           });
-          console.log('data hasil parse:', data);
           setDoctors(data);
         }
       })
@@ -66,9 +66,10 @@ const Home = ({navigation}) => {
       .ref('news/')
       .once('value')
       .then((res) => {
-        console.log('data: ', res.val());
         if (res.val()) {
-          setNews(res.val());
+          const data = res.val();
+          const filterData = data.filter((el) => el !== null);
+          setNews(filterData);
         }
       })
       .catch((err) => {
@@ -93,7 +94,7 @@ const Home = ({navigation}) => {
                     <DoctorCategory
                       key={item.id}
                       category={item.category}
-                      onPress={() => navigation.navigate('ChooseDoctor')}
+                      onPress={() => navigation.navigate('ChooseDoctor', item)}
                     />
                   );
                 })}
@@ -110,7 +111,7 @@ const Home = ({navigation}) => {
                   name={doctor.data.fullName}
                   desc={doctor.data.profession}
                   avatar={{uri: doctor.data.photo}}
-                  onPress={() => navigation.navigate('DoctorProfile')}
+                  onPress={() => navigation.navigate('DoctorProfile', doctor)}
                 />
               );
             })}
