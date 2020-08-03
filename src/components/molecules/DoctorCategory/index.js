@@ -8,7 +8,7 @@ const DoctorCategory = ({category, onPress}) => {
     if (category === 'dokter umum') {
       return <ILCatUmum style={styles.illustration} />;
     }
-    if (category === 'love') {
+    if (category === 'psikiater') {
       return <ILCatPsikiater style={styles.illustration} />;
     }
     if (category === 'apoteker') {
