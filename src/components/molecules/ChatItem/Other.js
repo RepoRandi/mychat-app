@@ -3,15 +3,15 @@ import {StyleSheet, Text, View, Image} from 'react-native';
 import {fonts, colors} from '../../../utils';
 import {DummyUser1} from '../../../assets';
 
-const Other = () => {
+const Other = ({text, date, photo}) => {
   return (
     <View style={styles.container}>
-      <Image source={DummyUser1} style={styles.avatar} />
+      <Image source={photo} style={styles.avatar} />
       <View>
         <View style={styles.chatContent}>
-          <Text style={styles.text}>Iya jdi dong beb..</Text>
+          <Text style={styles.text}>{text}</Text>
         </View>
-        <Text style={styles.date}>6.35 AM</Text>
+        <Text style={styles.date}>{date}</Text>
       </View>
     </View>
   );
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     padding: 12,
     paddingRight: 18,
     backgroundColor: colors.primary,
-    // maxWidth: '90%',
+    maxWidth: '90%',
     borderRadius: 10,
     borderBottomLeftRadius: 0,
   },
