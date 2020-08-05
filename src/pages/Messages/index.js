@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {ImageBackground, StyleSheet, Text, View} from 'react-native';
-import {ILHospitalBg, ILMessageBg} from '../../assets';
+import {ILMessageBg} from '../../assets';
 import {List} from '../../components';
 import {Fire} from '../../configs';
 import {colors, fonts, getData} from '../../utils';

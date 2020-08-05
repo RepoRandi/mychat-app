@@ -1,38 +1,10 @@
-import React, {useState} from 'react';
-import {StyleSheet, Text, View, ImageBackground} from 'react-native';
-import {
-  ILHospitalBg,
-  DummyHospital1,
-  DummyHospital2,
-  DummyHospital3,
-  DummyUser1,
-  DummyUser2,
-  DummyUser3,
-} from '../../assets';
-import {fonts, colors} from '../../utils';
-import {ListHospital, List} from '../../components';
+import React from 'react';
+import {ImageBackground, StyleSheet, Text, View} from 'react-native';
+import MapView, {Marker} from 'react-native-maps';
+import {ILHospitalBg} from '../../assets';
+import {colors, fonts} from '../../utils';
 
 const Contact = () => {
-  const [users, setUsers] = useState([
-    {
-      id: 1,
-      profile: DummyUser1,
-      name: 'Milea Anita',
-      desc: '@milea',
-    },
-    {
-      id: 2,
-      profile: DummyUser2,
-      name: 'Gisel',
-      desc: '@gisel',
-    },
-    {
-      id: 3,
-      profile: DummyUser3,
-      name: 'Putri',
-      desc: '@putri',
-    },
-  ]);
   return (
     <View style={styles.page}>
       <ImageBackground source={ILHospitalBg} style={styles.background}>
@@ -40,37 +12,22 @@ const Contact = () => {
         <Text style={styles.desc}>3 tersedia</Text>
       </ImageBackground>
       <View style={styles.content}>
-        {/* <ListHospital
-          type="Rumah Sakit"
-          name="Citra Bunga Merdeka"
-          address="Jln. Surya Sejahtera 20"
-          pic={DummyHospital1}
-        />
-        <ListHospital
-          type="Rumah Sakit Anak"
-          name="Happy Family Kids"
-          address="Jln. Surya Sejahtera 27"
-          pic={DummyHospital2}
-        />
-        <ListHospital
-          type="Rumah Sakit Jiwa"
-          name="Tingkat Paling Atas"
-          address="Jln. Surya Sejahtera 36"
-          pic={DummyHospital3}
-        /> */}
-        <View>
-          <View>
-            {users.map((user) => {
-              return (
-                <List
-                  key={user.id}
-                  profile={user.profile}
-                  name={user.name}
-                  desc={user.desc}
-                />
-              );
-            })}
-          </View>
+        <View style={styles.view}>
+          <MapView
+            style={styles.maps}
+            initialRegion={{
+              latitude: -7.9771298,
+              longitude: 112.6318751,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}>
+            <Marker
+              draggable
+              coordinate={{latitude: -7.9771298, longitude: 112.6318751}}
+              title="Alun Alun Tugu Kota Malang"
+              description="Taman kota kecil yang terawat baik ini memiliki kawasan berumput & kolam teratai yang mengelilingi tugu.."
+            />
+          </MapView>
         </View>
       </View>
     </View>
@@ -95,10 +52,24 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   content: {
-    backgroundColor: colors.white,
+    backgroundColor: colors.border,
     borderRadius: 20,
     flex: 1,
     marginTop: -30,
     paddingTop: 14,
+  },
+  view: {
+    position: 'absolute',
+    top: 6,
+    bottom: 6,
+    left: 6,
+    right: 6,
+  },
+  maps: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
   },
 });
