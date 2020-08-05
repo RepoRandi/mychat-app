@@ -96,7 +96,7 @@ const Chatting = ({navigation, route}) => {
       <Header
         type="dark-profile"
         title={dataDoctor.data.fullName}
-        desc={dataDoctor.data.category}
+        desc={dataDoctor.data.profession}
         photo={{uri: dataDoctor.data.photo}}
         onPress={() => navigation.goBack()}
       />

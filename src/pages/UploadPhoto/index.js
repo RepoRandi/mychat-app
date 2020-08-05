@@ -13,7 +13,7 @@ const UploadPhoto = ({navigation, route}) => {
   const [photo, setPhoto] = useState(ILNullPhoto);
   const getImage = () => {
     ImagePicker.launchImageLibrary(
-      {quality: 0.5, maxWidth: 200, maxHeight: 200},
+      {quality: 0.5, maxWidth: 500, maxHeight: 500},
       (response) => {
         if (response.didCancel || response.error) {
           showError('Oops, sepertinya anda tidak memilih foto nya?');

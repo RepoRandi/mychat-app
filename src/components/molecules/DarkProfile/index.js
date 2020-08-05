@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
     fontFamily: fonts.primary[600],
     color: colors.white,
     textAlign: 'center',
+    textTransform: 'capitalize',
   },
   desc: {
     fontSize: 14,
@@ -42,6 +43,7 @@ const styles = StyleSheet.create({
     color: colors.text.subTitle,
     marginTop: 6,
     textAlign: 'center',
+    textTransform: 'capitalize',
   },
   avatar: {width: 46, height: 46, borderRadius: 46 / 2},
 });

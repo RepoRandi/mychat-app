@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
-import {DummyUser1, DummyUser2, DummyUser3} from '../../assets';
+import {DummyUser1, DummyUser2, DummyUser3, ILNullPhoto} from '../../assets';
 import {
   DoctorCategory,
   DoctorRated,
@@ -9,17 +9,33 @@ import {
   NewsItem,
 } from '../../components';
 import {Fire} from '../../configs';
-import {colors, fonts, showError} from '../../utils';
+import {colors, fonts, showError, getData} from '../../utils';
 
 const Home = ({navigation}) => {
+  const [profile, setProfile] = useState({
+    photo: ILNullPhoto,
+    fullName: '',
+    profession: '',
+  });
   const [news, setNews] = useState([]);
   const [categoryDoctor, setCategoryDoctor] = useState([]);
   const [doctors, setDoctors] = useState([]);
   useEffect(() => {
+    navigation.addListener('focus', () => {
+      getUserData();
+    });
     getCategoryDoctor();
     getTopRatedDoctors();
     getNews();
-  }, []);
+  }, [navigation]);
+
+  const getUserData = () => {
+    getData('user').then((res) => {
+      const data = res;
+      data.photo = res?.photo?.length > 1 ? {uri: res.photo} : ILNullPhoto;
+      setProfile(res);
+    });
+  };
 
   const getCategoryDoctor = () => {
     Fire.database()
@@ -82,7 +98,10 @@ const Home = ({navigation}) => {
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.wrapperSection}>
             <Gap height={30} />
-            <HomeProfile onPress={() => navigation.navigate('UserProfile')} />
+            <HomeProfile
+              profile={profile}
+              onPress={() => navigation.navigate('UserProfile', profile)}
+            />
             <Text style={styles.welcome}>Mau Chating Dengan Siapa?</Text>
           </View>
           <View style={styles.wrapperScroll}>

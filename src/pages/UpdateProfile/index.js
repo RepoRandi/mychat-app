@@ -4,7 +4,7 @@ import ImagePicker from 'react-native-image-picker';
 import {ILNullPhoto} from '../../assets';
 import {Button, Gap, Header, Input, Profile} from '../../components';
 import {Fire} from '../../configs';
-import {colors, getData, showError, storeData} from '../../utils';
+import {colors, getData, showError, storeData, showSuccess} from '../../utils';
 
 const UpdateProfile = ({navigation}) => {
   const [profile, setProfile] = useState({
@@ -32,11 +32,9 @@ const UpdateProfile = ({navigation}) => {
         //? Update Password
         updatePassword();
         updateProfileData();
-        navigation.replace('MainApp');
       }
     } else {
       updateProfileData();
-      navigation.replace('MainApp');
     }
   };
 
@@ -57,7 +55,13 @@ const UpdateProfile = ({navigation}) => {
       .ref(`users/${profile.uid}/`)
       .update(data)
       .then(() => {
-        storeData('user', data);
+        storeData('user', data)
+          .then(() => {
+            navigation.replace('MainApp');
+          })
+          .catch(() => {
+            showError('Terjadi Masalah');
+          });
       })
       .catch((err) => {
         showError(err.message);
@@ -73,7 +77,7 @@ const UpdateProfile = ({navigation}) => {
 
   const getImage = () => {
     ImagePicker.launchImageLibrary(
-      {quality: 0.5, maxWidth: 200, maxHeight: 200},
+      {quality: 0.5, maxWidth: 500, maxHeight: 500},
       (response) => {
         if (response.didCancel || response.error) {
           showError('Oops, sepertinya anda tidak memilih foto nya?');

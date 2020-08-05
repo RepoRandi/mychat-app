@@ -47,7 +47,6 @@ const Messages = ({navigation}) => {
         <Text style={styles.title}>Messages</Text>
       </ImageBackground>
       <View style={styles.content}>
-        {/* <Text style={styles.title}>Messages</Text> */}
         {historyChat.map((chat) => {
           const dataDoctor = {
             id: chat.detailDoctor.uid,
